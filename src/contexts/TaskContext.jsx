@@ -181,6 +181,10 @@ export function TaskProvider({ children }) {
     await updateTask(id, { concluida: true, concluida_em: new Date().toISOString() })
   }
 
+  const uncompleteTask = async (id) => {
+    await updateTask(id, { concluida: false, concluida_em: null })
+  }
+
   const postponeTask = async (id, novoPrazo, justificativa) => {
     await updateTask(id, { prazo: novoPrazo, justificativa_adiamento: justificativa })
   }
@@ -200,6 +204,7 @@ export function TaskProvider({ children }) {
       updateTask,
       deleteTask,
       completeTask,
+      uncompleteTask,
       postponeTask,
     }}>
       {children}

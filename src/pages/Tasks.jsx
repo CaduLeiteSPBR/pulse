@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTasks } from '../contexts/TaskContext'
 import TaskCard from '../components/Tasks/TaskCard'
 import TaskFormModal from '../components/Tasks/TaskFormModal'
-import { ListTodo, Search, Filter, CheckCircle2 } from 'lucide-react'
+import { ListTodo, Search, Filter, CheckCircle2, Undo2 } from 'lucide-react'
 import clsx from 'clsx'
 
 const FILTERS = [
@@ -20,7 +20,7 @@ const SORTS = [
 ]
 
 export default function Tasks() {
-  const { activeTasks, completedTasks, loading } = useTasks()
+  const { activeTasks, completedTasks, loading, uncompleteTask } = useTasks()
   const [filter, setFilter] = useState('todas')
   const [sort, setSort] = useState('score')
   const [search, setSearch] = useState('')
@@ -134,11 +134,18 @@ export default function Tasks() {
           </button>
 
           {showCompleted && (
-            <div className="mt-3 space-y-2 opacity-60">
+            <div className="mt-3 space-y-2">
               {completedTasks.map(task => (
-                <div key={task.id} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-3 flex items-center gap-3">
+                <div key={task.id} className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-3 flex items-center gap-3 opacity-60 hover:opacity-80 transition-opacity">
                   <CheckCircle2 size={16} className="text-green-500 flex-shrink-0" />
-                  <span className="text-sm text-gray-600 dark:text-gray-400 line-through">{task.titulo}</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400 line-through flex-1">{task.titulo}</span>
+                  <button
+                    onClick={() => uncompleteTask(task.id)}
+                    title="Desfazer conclusão"
+                    className="p-1.5 rounded-lg text-gray-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors flex-shrink-0"
+                  >
+                    <Undo2 size={14} />
+                  </button>
                 </div>
               ))}
             </div>
