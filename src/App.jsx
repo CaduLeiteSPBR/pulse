@@ -14,6 +14,13 @@ function ProtectedRoute({ children }) {
   return children
 }
 
+function PublicRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return null
+  if (user) return <Navigate to="/" replace />
+  return children
+}
+
 export default function App() {
   return (
     <ThemeProvider>
@@ -21,7 +28,7 @@ export default function App() {
         <TaskProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
               <Route path="/" element={
                 <ProtectedRoute>
                   <Layout>

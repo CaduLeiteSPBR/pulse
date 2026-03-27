@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useTheme } from '../contexts/ThemeContext'
 import { Sun, Moon, Eye, EyeOff, Loader2 } from 'lucide-react'
@@ -6,6 +7,7 @@ import { Sun, Moon, Eye, EyeOff, Loader2 } from 'lucide-react'
 export default function Login() {
   const { login, loginWithEmail, register } = useAuth()
   const { theme, toggleTheme } = useTheme()
+  const navigate = useNavigate()
 
   const [tab, setTab] = useState('google')        // 'google' | 'email'
   const [mode, setMode] = useState('login')        // 'login' | 'register'
@@ -30,6 +32,7 @@ export default function Login() {
       } else {
         await loginWithEmail(form.email, form.password)
       }
+      navigate('/')
     } catch (err) {
       setError(err.message || 'Erro ao autenticar')
     } finally {
