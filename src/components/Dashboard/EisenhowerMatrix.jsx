@@ -45,7 +45,9 @@ export default function EisenhowerMatrix({ tasks }) {
     .map(t => ({
       ...t,
       x: Math.round(t.urgencia * 100),
-      y: Math.round((t.importancia / 4) * 100),
+      // Desloca o mapeamento para que a linha divisória (y=50) caia entre imp=2 e imp=3
+      // imp 1→12, 2→37, 3→62, 4→87
+      y: Math.round(((t.importancia - 0.5) / 4) * 100),
     }))
 
   return (
