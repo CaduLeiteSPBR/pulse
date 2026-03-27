@@ -1,0 +1,16 @@
+{
+  "name": "pulse-workers",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "hono": "^4.6.3",
+    "itty-router": "^5.0.18"
+  },
+  "devDependencies": {
+    "wrangler": "^3.79.0"
+  }
+}

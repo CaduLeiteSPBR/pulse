@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+workers/node_modules/
+
+# Build
+dist/
+.wrangler/
+
+# Env
+.env
+.env.local
+.env.production
+.dev.vars
+
+# Editor
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
