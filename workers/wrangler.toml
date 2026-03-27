@@ -11,8 +11,8 @@ SESSION_SECRET = ""
 [[d1_databases]]
 binding = "DB"
 database_name = "pulse-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "db7e5a8c-6845-46e9-bb44-9b6f2d2885dc"
 
 [[kv_namespaces]]
 binding = "SESSIONS"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "ed7a3e9dcfc14ea89d1b75bb08706416"
