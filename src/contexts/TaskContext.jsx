@@ -118,26 +118,41 @@ export function TaskProvider({ children }) {
   }, [fetchTasks])
 
   const createTask = async (taskData) => {
-    if (import.meta.env.DEV) {
-      const newTask = {
-        id: String(Date.now()),
-        ...taskData,
-        concluida: false,
-        criada_em: new Date().toISOString(),
-        urgencia: 0.5,
-        score: taskData.importancia * 0.5,
-      }
-      setTasks(prev => [newTask, ...prev])
-      return newTask
+    // Atualização otimista: aparece imediatamente no gráfico
+    const tempId = `temp_${Date.now()}`
+    const tempTask = {
+      id: tempId,
+      ...taskData,
+      concluida: false,
+      criada_em: new Date().toISOString(),
+      ...calcularPrioridade(taskData, freeHours),
     }
-    const res = await fetch('/api/tasks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(taskData),
-    })
-    if (!res.ok) throw new Error('Erro ao criar tarefa')
-    await fetchTasks()
-    return res.json()
+    setTasks(prev => [tempTask, ...prev])
+
+    if (import.meta.env.DEV) return tempTask
+
+    try {
+      const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(taskData),
+      })
+      if (!res.ok) {
+        setTasks(prev => prev.filter(t => t.id !== tempId))
+        throw new Error('Erro ao criar tarefa')
+      }
+      const data = await res.json()
+      // Substitui o temp pela tarefa real com ID do servidor
+      setTasks(prev => prev.map(t =>
+        t.id === tempId
+          ? { ...data.task, ...calcularPrioridade(data.task, freeHours) }
+          : t
+      ))
+      return data.task
+    } catch (err) {
+      setTasks(prev => prev.filter(t => t.id !== tempId))
+      throw err
+    }
   }
 
   const updateTask = async (id, updates) => {

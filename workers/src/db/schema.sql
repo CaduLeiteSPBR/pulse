@@ -1,10 +1,11 @@
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
-  google_id TEXT UNIQUE NOT NULL,
+  google_id TEXT UNIQUE,
   email TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   picture TEXT,
+  password_hash TEXT,
   google_access_token TEXT,
   google_refresh_token TEXT,
   token_expires_at INTEGER,
