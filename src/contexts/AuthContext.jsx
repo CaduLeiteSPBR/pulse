@@ -7,32 +7,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check session on mount
     const checkSession = async () => {
       try {
         const res = await fetch('/api/auth/me')
         if (res.ok) {
           const data = await res.json()
           setUser(data.user)
-        } else {
-          // Dev mode: mock user for local development
-          if (import.meta.env.DEV) {
-            setUser({
-              id: 'dev-user',
-              name: 'Usuário Dev',
-              email: 'dev@pulse.local',
-              picture: null,
-            })
-          }
+        } else if (import.meta.env.DEV) {
+          setUser({ id: 'dev-user', name: 'Usuário Dev', email: 'dev@pulse.local', picture: null })
         }
       } catch {
         if (import.meta.env.DEV) {
-          setUser({
-            id: 'dev-user',
-            name: 'Usuário Dev',
-            email: 'dev@pulse.local',
-            picture: null,
-          })
+          setUser({ id: 'dev-user', name: 'Usuário Dev', email: 'dev@pulse.local', picture: null })
         }
       } finally {
         setLoading(false)
@@ -41,8 +27,33 @@ export function AuthProvider({ children }) {
     checkSession()
   }, [])
 
+  // Login via Google OAuth (redirect)
   const login = () => {
     window.location.href = '/api/auth/google'
+  }
+
+  // Login com email/senha
+  const loginWithEmail = async (email, password) => {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error || 'Erro ao entrar')
+    setUser(data.user)
+  }
+
+  // Criar conta com email/senha
+  const register = async (name, email, password) => {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error || 'Erro ao criar conta')
+    setUser(data.user)
   }
 
   const logout = async () => {
@@ -51,7 +62,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, loginWithEmail, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

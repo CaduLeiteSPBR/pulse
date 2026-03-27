@@ -6,7 +6,8 @@
       "Bash(npm run:*)",
       "Bash(openssl rand:*)",
       "Bash(node -e \"console.log\\(require\\(''''crypto''''\\).randomBytes\\(32\\).toString\\(''''hex''''\\)\\)\")",
-      "Bash(grep -r 'Hello World' '/c/Users/cadul/Downloads/Projetos Dev/Pulse' --include=*.html --include=*.js --include=*.ts -l)"
+      "Bash(grep -r 'Hello World' '/c/Users/cadul/Downloads/Projetos Dev/Pulse' --include=*.html --include=*.js --include=*.ts -l)",
+      "Bash(find '/c/Users/cadul/Downloads/Projetos Dev/Pulse/src' -iname *login* -o -iname *auth*)"
     ]
   }
 }
