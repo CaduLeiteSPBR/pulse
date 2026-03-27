@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npx wrangler:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(openssl rand:*)",
+      "Bash(node -e \"console.log\\(require\\(''''crypto''''\\).randomBytes\\(32\\).toString\\(''''hex''''\\)\\)\")",
+      "Bash(grep -r 'Hello World' '/c/Users/cadul/Downloads/Projetos Dev/Pulse' --include=*.html --include=*.js --include=*.ts -l)"
     ]
   }
 }
