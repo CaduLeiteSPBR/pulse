@@ -101,14 +101,14 @@ export const QUADRANTE_CONFIG = {
     text: 'text-amber-700 dark:text-amber-400',
   },
   'delegar': {
-    label: 'Delegar',
+    label: 'Fazer Mais Tarde',
     color: '#3b82f6',
     bg: 'bg-blue-50 dark:bg-blue-950/30',
     border: 'border-blue-200 dark:border-blue-800',
     text: 'text-blue-700 dark:text-blue-400',
   },
   'eliminar': {
-    label: 'Eliminar',
+    label: 'Aguardar',
     color: '#6b7280',
     bg: 'bg-gray-50 dark:bg-gray-900/50',
     border: 'border-gray-200 dark:border-gray-700',
